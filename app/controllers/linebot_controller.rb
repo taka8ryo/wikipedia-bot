@@ -24,6 +24,7 @@ class LinebotController < ApplicationController
 
     events.each { |event|
       if event.message['text'] != nil
+        # LINEで送られてきた文書を取得
         word = event.message['text']
         # 日本語版Wikipediaを利用する
         Wikipedia.Configure {
@@ -32,10 +33,10 @@ class LinebotController < ApplicationController
         }
       end
 
-      # 記事を取得
+      # wikipediaから情報取得
       page = Wikipedia.find(word)
 
-      # サマリーを標準出力
+      # 概要とURLを返す
       response = page.summary + "\n" + page.fullurl
 
       case event
